@@ -5,6 +5,9 @@ DELIMITER $$
 CREATE TRIGGER before_update_user
 BEFORE UPDATE ON users FOR EACH ROW
 BEGIN
+    IF NEW.email NOT REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,4}$' THEN
+	SET NEW.email = OLD.email;
+    END IF;
     IF NEW.email <> OLD.email THEN
 	IF NEW.email REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,4}$' THEN
              SET NEW.valid_email = !NEW.valid_email;
