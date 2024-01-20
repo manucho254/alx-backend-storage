@@ -5,9 +5,8 @@ DELIMITER $$
 CREATE TRIGGER before_update_user
 BEFORE UPDATE ON users FOR EACH ROW
 BEGIN
-    SET NEW.valid_email = OLD.valid_email;
     IF NEW.email <> OLD.email THEN
-        SET NEW.valid_email = !OLD.valid_email;
+        SET NEW.valid_email = 0;
     END IF;
 END$$
 
