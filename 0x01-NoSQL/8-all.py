@@ -15,8 +15,8 @@ if __name__ == "__main__":
         if not isinstance(mongo_collection, Collection):
             return []
 
-        documents = mongo_collection.find()
-        if len(dict(documents)):
+        documents = dict(mongo_collection.find())
+        if len(documents):
             return []
 
         return documents
