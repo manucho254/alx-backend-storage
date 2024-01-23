@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
 """ module to list all documents in collection
 """
-from pymongo.collection import Collection
 
+if __name__ == "__main__":
+    from pymongo.collection import Collection
 
-def list_all(mongo_collection):
-    """ lists all documents in a collection
-        Args:
-            mongo_collection: mongo collection
-        Return:
-             list of documents
-    """
-    if not isinstance(mongo_collection, Collection):
-        return []
+    def list_all(mongo_collection):
+        """ lists all documents in a collection
+            Args:
+              mongo_collection: mongo collection
+            Return:
+                 list of documents
+        """
+        if not isinstance(mongo_collection, Collection):
+            return []
 
-    documents = mongo_collection.find()
+        documents = mongo_collection.find()
+        if len(dict(documents)):
+            return []
 
-    if len(dict(documents)):
-        return []
-
-    return documents
+        return documents
