@@ -43,9 +43,8 @@ if __name__ == "__main__":
 
     ip_addresses = dict(sorted(ip_addresses.items(),
                         key=lambda kv: (kv[1], kv[0]), reverse=True))
-
     count = 0
-    print("IPS:")
+    print("IPs:")
     for ip, value in ip_addresses.items():
         if count == 10:
             break
