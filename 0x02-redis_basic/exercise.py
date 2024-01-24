@@ -6,13 +6,13 @@ from typing import Union
 import uuid
 
 
-class Cache():
+class Cache:
     """ cache class
     """
     def __init__(self) -> None:
         """ Initialize class
         """
-        self.__redis = redis.Redis()
+        self.__redis = redis.Redis(decode_responses=True)
         self.__redis.flushdb()
 
     def store(self, data: Union[str, bytes, int, float]) -> str:
@@ -22,7 +22,7 @@ class Cache():
             Return:
                 string representing key
         """
-        key = str(uuid.uuid4())
-        self.__redis.mset({key: data})
+        key: str = str(uuid.uuid4())
+        self.__redis.set(key, data)
 
         return key
