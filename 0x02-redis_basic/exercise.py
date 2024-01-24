@@ -23,6 +23,6 @@ class Cache():
                 string representing key
         """
         key = str(uuid.uuid4())
-        self.__redis.set(key, data)
+        self.__redis.mset({key: data})
 
         return key
