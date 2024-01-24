@@ -107,11 +107,15 @@ def replay(method: str):
         of calls of a particular function.
         Args:
             method_name: name of key
+        Return:
+            None
     """
+    client = redis.Redis()
+
     method_name = method.__qualname__
 
-    inputs = cache._redis.lrange("{}:inputs".format(method_name), 0, -1)
-    outputs = cache._redis.lrange("{}:outputs".format(method_name), 0, -1)
+    inputs = client.lrange("{}:inputs".format(method_name), 0, -1)
+    outputs = client.lrange("{}:outputs".format(method_name), 0, -1)
 
     merged = dict(zip(inputs, outputs))
 
