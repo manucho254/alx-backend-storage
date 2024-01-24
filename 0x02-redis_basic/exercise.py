@@ -100,3 +100,24 @@ class Cache:
                 value as integer
         """
         return int(val.decode("utf-8"))
+
+
+def replay(method: str):
+    """ function to display the history
+        of calls of a particular function.
+        Args:
+            method_name: name of key
+    """
+    method_name = method.__qualname__
+
+    inputs = cache._redis.lrange("{}:inputs".format(method_name), 0, -1)
+    outputs = cache._redis.lrange("{}:outputs".format(method_name), 0, -1)
+
+    merged = dict(zip(inputs, outputs))
+
+    print("{} was called {} times:".format(method_name, len(merged)))
+
+    for key, val in merged.items():
+        input_d = key.decode("utf-8")
+        output = val.decode("utf-8")
+        print("{}(*{}) -> {}".format(method_name, input_d, output))
