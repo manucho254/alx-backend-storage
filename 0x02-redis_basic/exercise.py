@@ -102,13 +102,11 @@ class Cache:
         return int(val.decode("utf-8"))
 
 
-def replay(method: Callable):
+def replay(method: Callable) -> None:
     """ function to display the history
         of calls of a particular function.
         Args:
             method_name: name of key
-        Return:
-            None
     """
     client = redis.Redis()
 
