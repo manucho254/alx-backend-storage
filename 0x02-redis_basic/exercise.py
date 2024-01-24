@@ -9,7 +9,7 @@ from typing import Union, Optional
 import uuid
 
 
-def count_calls(method: Callable):
+def count_calls(method: Callable) -> Callable:
     """ count number of calls
         Args:
             function to count number of calls
