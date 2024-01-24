@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
-""" Writing strings to Redis
 """
+Writing strings to Redis store
+"""
+
 import redis
 from typing import Union
 import uuid
 
 
 class Cache:
-    """ Cache class defination
+    """ 
+    Class defination
     """
     def __init__(self):
-        """ Initialize class
+        """
+        Initialize class
         """
         self.__redis = redis.Redis()
         self.__redis.flushdb()
