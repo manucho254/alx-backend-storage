@@ -7,9 +7,9 @@ import uuid
 
 
 class Cache:
-    """ cache class
+    """ Cache class defination
     """
-    def __init__(self) -> None:
+    def __init__(self):
         """ Initialize class
         """
         self.__redis = redis.Redis(decode_responses=True)
