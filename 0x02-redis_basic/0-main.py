@@ -30,3 +30,14 @@ for value, fn in TEST_CASES.items():
     print(type(cache.get(key, fn=fn)), type(value))
     print(cache.get(key, fn=fn) == value)
     assert cache.get(key, fn=fn) == value
+
+
+# count number of function calls
+cache = Cache()
+
+cache.store(b"first")
+print(cache.get(cache.store.__qualname__))
+
+cache.store(b"second")
+cache.store(b"third")
+print(cache.get(cache.store.__qualname__))
