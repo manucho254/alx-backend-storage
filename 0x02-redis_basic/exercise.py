@@ -2,10 +2,9 @@
 """
 Writing strings to Redis store
 """
-from collections.abc import Callable
 from functools import wraps
 import redis
-from typing import Union, Optional, Any
+from typing import Union, Callable, Optional, Any
 import uuid
 
 
