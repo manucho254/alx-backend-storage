@@ -5,7 +5,7 @@ Writing strings to Redis store
 from collections.abc import Callable
 from functools import wraps
 import redis
-from typing import Union, Optional
+from typing import Union, Optional, Any
 import uuid
 
 
@@ -17,7 +17,7 @@ def count_calls(method: Callable) -> Callable:
             wrapper function
     """
     @wraps(method)
-    def wrapper(self, *args, **kwargs) -> Callable:
+    def wrapper(self: Any, *args: Any, **kwargs: Any) -> Callable:
         """ wrapper function that increaments
             the number of method calls.
         """
