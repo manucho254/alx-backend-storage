@@ -2,15 +2,15 @@
 """
 Writing strings to Redis store
 """
-
+from collections.abc import Callable
 import redis
-from typing import Union
+from typing import Union, Optional
 import uuid
 
 
 class Cache:
-    """ 
-    Class defination
+    """
+      Class defination
     """
     def __init__(self):
         """
@@ -30,3 +30,34 @@ class Cache:
         self._redis.set(key, data)
 
         return key
+
+    def get(self, key: str, fn: Optional[Callable] = None):
+        """ get value by key
+            Args:
+                key: key to find value
+                fn: comversion function
+            Return:
+                any type
+        """
+        if fn:
+            return fn(self._redis.get(key))
+
+        return self._redis.get(key)
+
+    def get_str(self, val) -> str:
+        """ convert bytes to string
+            Args:
+                val: value to convert to string
+            Return:
+                value as string
+        """
+        return val.decode("utf-8")
+
+    def get_int(self, val) -> int:
+        """ convert bytes to int
+            Args:
+                val: value to convert to int
+            Return:
+                value as integer
+        """
+        return int(val.decode("utf-8"))
