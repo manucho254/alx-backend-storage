@@ -10,18 +10,16 @@ import uuid
 
 
 def count_calls(method: Callable) -> Callable:
-    """ count number of calls
-        Args:
-            function to count number of calls
-        Return:
-            wrapper function
+    """ count number of calls made by Cache class
     """
+    key = method.__qualname__
+
     @wraps(method)
     def wrapper(self: Any, *args: Any, **kwargs: Any) -> Any:
         """ wrapper function that increaments
             the number of method calls.
         """
-        self._redis.incr(method.__qualname__)
+        self._redis.incr(key)
         return method(self, *args, **kwargs)
 
     return wrapper
