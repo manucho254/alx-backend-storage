@@ -21,30 +21,22 @@ def cache_result(func: Callable) -> Any:
         """ wrapper function to cache
             responses that expire in 10 seconds
         """
-        return_val = func(*args, **kwargs)
-        client.setex(key, timedelta(seconds=10), value=return_val)
+        url = args[0]
+        cached_page = client.get(key)
 
-        return return_val
+        # send request again to url if no cache is found
+        # an update info else get cached data
+        if not cached_page:
+            return_val = func(*args, **kwargs)
+            client.setex(key, timedelta(seconds=10), value=return_val)
+            client.incr("count:{}".format(url))
+            return return_val
 
-    return wrapper
-
-
-def count_accessed(func: Callable) -> Any:
-    """ decorator function
-    """
-
-    @wraps(func)
-    def wrapper(*args: Any, **kwargs: Any) -> Any:
-        """ wrapper function to count the
-            number of requests made to url
-        """
-        client.incr("count:{}".format(args[0]))
-        return func(*args, **kwargs)
+        return client.get(key).decode("utf-8")
 
     return wrapper
 
 
-@count_accessed
 @cache_result
 def get_page(url: str) -> str:
     """ get page data
@@ -53,10 +45,6 @@ def get_page(url: str) -> str:
         Return:
            data from page
     """
-    cached_page = client.get("get_page")
-    if cached_page:
-        return cached_page.decode("utf-8")
-
     query = requests.get(url)
 
     return query.text
