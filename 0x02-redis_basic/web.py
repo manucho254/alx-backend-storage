@@ -29,7 +29,7 @@ def cache_result(func: Callable) -> Any:
 
         if not client.get(url):
             client.set("count:{}".format(url), 1)
-            client.setex(url, timedelta(seconds=10), return_val)
+            client.setex(f"result:{url}", timedelta(seconds=10), return_val)
         else:
             client.incr("count:{}".format(url))
 
