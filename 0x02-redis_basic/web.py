@@ -31,7 +31,7 @@ def cache_result(func: Callable) -> Any:
             client.setex(url, timedelta(seconds=10), value=return_val)
             return return_val
 
-        return client.get(key).decode("utf-8")
+        return client.get(url).decode("utf-8")
 
     return wrapper
 
