@@ -28,7 +28,7 @@ def cache_result(func: Callable) -> Any:
         if not cached_page:
             client.incr("count:{}".format(url))
             return_val = func(*args, **kwargs)
-            client.setex(url, timedelta(seconds=10), value=return_val)
+            client.setex(url, 10, return_val)
             return return_val
 
         return client.get(url).decode("utf-8")
