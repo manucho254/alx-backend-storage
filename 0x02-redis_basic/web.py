@@ -25,13 +25,14 @@ def cache_result(func: Callable) -> Any:
 
         # send request again to url if no cache is found
         # an update info else get cached data
+        return_val = func(*args, **kwargs)
+
         if not cached_page:
             client.incr("count:{}".format(url))
             return_val = func(*args, **kwargs)
             client.setex(url, 10, return_val)
-            return return_val
 
-        return client.get(url).decode("utf-8")
+        return return_val
 
     return wrapper
 
