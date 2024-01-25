@@ -54,7 +54,7 @@ def get_page(url: str) -> str:
     """
     cached_page = client.get("get_page")
     if cached_page:
-        return cached_page
+        return cached_page.decode("utf-8")
 
     query = requests.get(url)
 
