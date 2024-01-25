@@ -5,6 +5,7 @@ import requests
 from functools import wraps
 from typing import Callable, Any
 import redis
+from datetime import timedelta
 
 
 client = redis.Redis()  # new redis instance
@@ -21,7 +22,7 @@ def cache_result(func: Callable) -> Any:
             responses that expire in 10 seconds
         """
         return_val = func(*args, **kwargs)
-        client.set(key, return_val, ex=10)
+        client.setex(key, timedelta(seconds=10), value=return_val)
 
         return return_val
 
